@@ -1,0 +1,484 @@
+.main-form-container {
+  text-align: center;
+  width: 800px;
+  min-width: auto;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dateInput {
+  height: 30px;
+  width: auto;
+  min-width: fit-content;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f1f1f1;
+  color: #333;
+  font-size: 14px;
+  text-align: center;
+  margin: 2px;
+}
+
+.main-sub-container {
+  flex-wrap: wrap;
+  font-weight: bold;
+
+}
+
+.table-border,
+.table-border th,
+.table-border td {
+  border: 1px solid black;
+  padding: 5px;
+  border-collapse: collapse;
+  text-align: left;
+  margin: 15px;
+  width: 360px;
+  font-size: small;
+  margin-bottom: 0px;
+}
+
+.table-border2,
+.table-border2 th,
+.table-border2 td {
+  border: 1px solid black;
+  padding: 5px;
+  border-collapse: collapse;
+  text-align: left;
+  margin: 15px;
+  width: 360px;
+  font-size: small;
+  margin-bottom: 0px;
+}
+
+.top-section-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+
+.table-border3,
+.table-border3 th,
+.table-border3 td {
+  border: 1px solid black;
+  padding: 5px;
+  border-collapse: collapse;
+  text-align: left;
+  padding-right: 0px;
+  margin-right: 0px;
+  width: 385px;
+  font-size: small;
+}
+
+.table-border4,
+.table-border4 th,
+.table-border4 td {
+  border: 1px solid black;
+  padding: 5px;
+  border-collapse: collapse;
+  text-align: left;
+  padding-left: 5px;
+  margin-left: 0px;
+  width: 385px;
+  font-size: small;
+}
+
+.second-section-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: center;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 0px;
+}
+
+.text-left {
+  text-align: start;
+  padding: 15px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  font-weight: bold;
+}
+
+.section-header {
+  width: 770px;
+  margin-left: 15px;
+  text-align: left;
+  border: 1px solid black;
+  margin-bottom: 0px;
+  padding: 05px;
+}
+
+
+.table-border5,
+.table-border5 th,
+.table-border5 td,
+.table-border5 tbody {
+  border: 1px solid black;
+  border-collapse: collapse;
+  font-size: small;
+  width: 100%;
+}
+.table-border5-mobile {
+  display: block;
+}
+
+.third-section-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0px;
+  margin-top: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.text-left {
+  text-align: start;
+  padding: 15px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  font-weight: bold;
+}
+
+.table-border6,
+.table-border6 th,
+.table-border6 td,
+.table-border6 tbody {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 5px;
+  font-size: small;
+  text-align: center;
+}
+
+.forth-section-container {
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 15px;
+  margin-bottom: 0px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.text-center {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  font-weight: bold;
+}
+
+.table-border7,
+.table-border7 th,
+.table-border7 td,
+.table-border7 tbody {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 5px;
+  font-size: small;
+  text-align: flex-start;
+  width: 100%;
+  margin-left: 15px;
+}
+
+.Observation-container {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: 15px;
+  margin-right: 15px;
+  padding-bottom: 0px;
+}
+
+.Icon-size {
+  height: 25px;
+  width: 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.add-button {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+}
+
+.header-text {
+  text-align: start;
+  font-weight: bold;
+}
+
+.Observation-table,
+.Observation-table th,
+.Observation-table td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  height: auto;
+  text-align: center;
+}
+
+.input-element {
+  width: 100%;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.input-width {
+  width: 80%;
+}
+
+.input-title {
+  width: auto;
+}
+
+.input-width1 {
+  width: 100%;
+}
+
+
+.footer-container {
+  margin-top: 0px;
+  padding-bottom: 5px;
+}
+
+.text-left {
+  text-align: left;
+  font-size: 18px;
+  margin-left: 0px;
+}
+
+.footer-sub {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 18px;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 5px;
+  margin-bottom: 0px;
+}
+
+.footer-sub1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 18px;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 5px;
+  margin-bottom: 0px;
+}
+
+.text {
+  font-size: 18px;
+  padding-right: 55px;
+}
+.text1 {
+  font-size: 10px;
+  padding-right: 55px;
+}
+
+.third-section-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0px;
+  margin-top: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  
+}
+
+.desktophide {
+  display: none;
+}
+
+/*New CSS 767max mobile*/
+
+@media screen and (max-width: 767px) {
+
+
+  .main-form-container {
+    text-align: center;
+   width: fit-content;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: x-small;
+  }
+  .main-sub-container {
+    flex-wrap: wrap;
+    font-weight: bold;
+    width: fit-content;
+  }
+
+  .top-section-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+  }
+
+  .second-section-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 0px;
+    width: auto;
+  }
+
+  .section-header {
+    width: 48.3%;
+    margin-left: 15px;
+    text-align: left;
+    border: 1px solid black;
+    margin-bottom: 0px;
+  }
+  .table-border3,
+  .table-border3 th,
+  .table-border3 td {
+    border: 1px solid black;
+    padding: 5px;
+    border-collapse: collapse;
+    text-align: left;
+    padding-right: 0px;
+    margin-right: 0px;
+    width: 350px;
+    font-size: small;
+    margin-top: 05px;
+  }
+  .table-border4,
+  .table-border4 th,
+  .table-border4 td {
+    border: 1px solid black;
+    padding: 5px;
+    border-collapse: collapse;
+    text-align: left;
+    padding-left: 5px;
+    margin-left: 0px;
+    width: 350px;
+    font-size: small;
+    margin-top: 05px;
+  }
+
+  .Observation-container {
+    margin-top: 0px;
+    margin-bottom: 0px;
+
+    padding-bottom: 0px;
+    width: auto;
+  }
+
+
+  .Observation-table-mb,
+.Observation-table-mb th,
+.Observation-table-mb td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    height: auto;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 0;
+}
+
+.input-element {
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.input-width {
+    width: 80%;
+}
+
+.input-titles {
+    width: auto;
+}
+
+
+
+  .table-border5 {
+    display: block;
+    width: 100%;
+  }
+
+  .table-border5 th,
+  .table-border5 td {
+    display: block;
+    padding: 8px;
+    margin-bottom: 8px;
+  }
+
+  .table-border5 th {
+    font-weight: bold;
+    display:  table-row;
+  }
+
+  .table-border5 thead {
+    display: table-row;
+  }
+
+  .mobile-hides:nth-child(2) {
+    display: none;
+  }
+
+  .table-border5 tbody .mobile-hides,
+    .table-border5 thead .mobile-hides {
+      display: none;
+    }
+  
+  /* Hide the table row with class "mobile-hide" */
+  .mobile-hide {
+    display: none;
+  }
+
+  .Observation-table th:nth-child(n+4) {
+    display: none;
+  }
+
+  /* Hide the right side columns of the table */
+  .Observation-table td:nth-last-child(-n+8) {
+    display: none;
+  }
+
+  .footer-sub {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    margin-left: 0px;
+  }
+
+  .text {
+    font-size: 18px;
+    text-align: start;
+    padding-left: 15px;
+  }
+
+}
+
+
