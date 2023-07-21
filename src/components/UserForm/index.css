@@ -301,6 +301,7 @@
   margin-top: 15px;
   padding-left: 15px;
   padding-right: 15px;
+  width: auto;
   
 }
 
@@ -348,6 +349,29 @@
     margin-top: 0px;
     width: auto;
   }
+
+
+  .forth-section-container {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 15px;
+    margin-bottom: 0px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .table-border7,
+.table-border7 th,
+.table-border7 td,
+.table-border7 tbody {
+  border: 1px solid black;
+  border-collapse: collapse;
+  font-size: small;
+  text-align: flex-start;
+  margin-left: 0px;
+  width: auto;
+}
 
   .section-header {
     width: 48.3%;
@@ -431,6 +455,7 @@
     display: block;
     padding: 8px;
     margin-bottom: 8px;
+    
   }
 
   .table-border5 th {
@@ -479,6 +504,27 @@
     padding-left: 15px;
   }
 
+
+  .desktophide {
+    margin-left: 5px;
+  }
+  
+
 }
 
 
+.unit{
+  padding: 5px;
+}
+
+.remarks{
+  height: 50px;
+  width: 90;
+  margin-top:12px;
+}
+
+.remark-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}

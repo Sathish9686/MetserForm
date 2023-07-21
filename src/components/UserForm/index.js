@@ -1,4 +1,5 @@
 import { Component } from "react";
+import InputMask from 'react-input-mask';
 import Header from "../Header";
 import "./index.css";
 
@@ -25,13 +26,13 @@ class UserForm extends Component {
                 <tr>
                   <th>Equipment No</th>
                   <td>
-                    <input type="number"  />
+                  <InputMask mask="*******************" maskChar={""}/>
                   </td>
                 </tr>
                 <tr>
                   <th>Equipment Condition</th>
                   <td>
-                    <input type="number"  />
+                  <InputMask mask="********************" maskChar={null} formatChars={{ '*': '[A-Za-z]' }} />
                   </td>
                 </tr>
               </tbody>
@@ -130,7 +131,11 @@ class UserForm extends Component {
                 <tr>
                   <th className="text-left ">Unit Under Measurement</th>
                   <td>
-                    <input  />
+                    <select className="input-width unit">
+                      <option>Celsius(°C)</option>
+                      <option>Fahrenheit(°F)</option>
+                      <option>Kelvin(K)</option>
+                    </select>
                   </td>
                 </tr>
               </tbody>
@@ -154,7 +159,7 @@ class UserForm extends Component {
             </thead>
             <tbody>
               <tr>
-                <th className="desktophide">Instrument Name</th>
+                <th className="desktophide" >Instrument Name</th>
                 <td>
                   <input />
                 </td>
@@ -336,10 +341,29 @@ class UserForm extends Component {
 
       <>
   <div className="footer-container">
-    <h1 className="text-left">Remark's:</h1>
+    <div className="remark-container">
+      <h1 className="text-left">Remark's:</h1>
+      <input type="text" className="remarks"></input>
+    </div>
     <div className="footer-sub">
-      <h1 className="text">Calibrated By:</h1>
+      <div className="by-container">
+        <h1 className="text">Calibrated By:</h1>
+        <select className="input-width">
+          <option>G Praveen</option>
+          <option>CH Naresh</option>
+          <option>K Mahesh</option>
+          <option>K Ramesh</option>
+          <option>M Johny</option>
+        </select>
+      </div>
+      <div>
       <h1 className="text">Checked By:</h1>
+      <select className="input-width">
+        <option>N Chanakya</option>
+        <option>M Ram Ratan</option>
+        <option>G Seshavalli Sai</option>
+      </select>
+      </div>
     </div>
     <div className="footer-sub1">
       <h1 className="text1">MTPL/CL/FF/OS/TH/TP</h1>
