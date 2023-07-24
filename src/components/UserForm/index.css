@@ -268,7 +268,7 @@
   font-size: 18px;
   margin-left: 15px;
   margin-right: 15px;
-  margin-top: 5px;
+  margin-top: 0px;
   margin-bottom: 0px;
 }
 
@@ -279,13 +279,13 @@
   font-size: 18px;
   margin-left: 15px;
   margin-right: 15px;
-  margin-top: 5px;
+  margin-top: 15px;
   margin-bottom: 0px;
 }
 
 .text {
   font-size: 18px;
-  padding-right: 55px;
+  
 }
 .text1 {
   font-size: 10px;
@@ -309,11 +309,87 @@
   display: none;
 }
 
+.unit{
+  padding: 5px;
+}
+
+.remarks{
+  height: 50px;
+  max-width: auto;
+  min-width:100px;
+  margin-top:12px;
+  margin-right: 15px;
+
+}
+
+.remark-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.checkedbystyle{
+  margin-left:0px;
+  padding-left: 0px;
+  text-align: left;
+}
+
+.calibratedstyle{
+  margin-left: 0px;
+  padding-left: 5px;
+
+}
+
+.text-left{
+  align-items: left;
+  text-align: left;
+  padding-bottom: 10px;
+  margin-left: 15px;
+  padding-left: 0px;
+}
+
+.left-align{
+  text-align: left;
+
+  align-items: left;
+}
+
+.button{
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
 /*New CSS 767max mobile*/
 
 @media screen and (max-width: 767px) {
+  .button{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+  }
+  .dateInput {
+    height: 30px;
+    width: auto;
+    min-width: fit-content;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f1f1f1;
+    color: #333;
+    font-size: 14px;
+    text-align: center;
+    margin: 2px;
+  }
 
-
+  .text {
+    font-size: 18px;
+    margin-left: 15px; 
+  }
+  .text-left{
+    align-items: left;
+    padding-bottom: 10px;
+  }
   .main-form-container {
     text-align: center;
    width: fit-content;
@@ -374,7 +450,7 @@
 }
 
   .section-header {
-    width: 48.3%;
+    width: 40%;
     margin-left: 15px;
     text-align: left;
     border: 1px solid black;
@@ -493,38 +569,33 @@
   .footer-sub {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    align-items: flex-start;
+
 
     margin-left: 0px;
   }
 
-  .text {
-    font-size: 18px;
-    text-align: start;
-    padding-left: 15px;
-  }
 
 
   .desktophide {
     margin-left: 5px;
   }
-  
-
+  .input-mb{
+    margin-left: 0px;
+  }
+  .text-left{
+    align-items: left;
+    padding-bottom: 10px;
+    margin-left: 15px;
+  }
+  .input-mb{
+    margin-left: 15px;
+    padding-left: 0px;
+  }
 }
 
-
-.unit{
-  padding: 5px;
-}
-
-.remarks{
-  height: 50px;
-  width: 90;
-  margin-top:12px;
-}
-
-.remark-container{
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
+@media print{
+  .button{
+    display: block;
+  }
 }

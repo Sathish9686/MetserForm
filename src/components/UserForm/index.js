@@ -57,7 +57,7 @@ class UserForm extends Component {
                 <tr>
                   <th>Calibration Points</th>
                   <td>
-                    <input type="number"  />
+                    <input type="text"  pattern="[A-Za-z0-9]+" />
                   </td>
                 </tr>
               </thead>
@@ -161,7 +161,13 @@ class UserForm extends Component {
               <tr>
                 <th className="desktophide" >Instrument Name</th>
                 <td>
-                  <input />
+                  <select className="input-width unit">
+                    <option>SSPRT Sensor with Indicator</option>
+                    <option>R-Type Thermocouple with Indicator</option>
+                    <option>S-Type Thermocouple</option>
+                    <option>4 Wire RTD with Indicator</option>
+                    <option>Multi stem Thermometer</option>
+                  </select>
                 </td>
                 <th className="desktophide">Instrument Sr.No / Id No.</th>
                 <td>
@@ -169,7 +175,9 @@ class UserForm extends Component {
                 </td>
                 <th className="desktophide"> Certificate No.</th>
                 <td>
-                  <input  />
+                  <select className="input-width unit"> 
+                    <option>DEMO-EQUIPMENT NAME 123</option>
+                  </select>
                 </td>
                 <th className="desktophide">Calibration Due On</th>
                 <td>
@@ -343,12 +351,13 @@ class UserForm extends Component {
   <div className="footer-container">
     <div className="remark-container">
       <h1 className="text-left">Remark's:</h1>
-      <input type="text" className="remarks"></input>
+      <textarea type="text" className="remarks" cols={30} rows={2} ></textarea>
     </div>
     <div className="footer-sub">
       <div className="by-container">
-        <h1 className="text">Calibrated By:</h1>
-        <select className="input-width">
+        <h1 className="text-left left-align">Calibrated By:</h1>
+        <input type="text" className="input-mb"/> <br></br>
+        <select className="text">
           <option>G Praveen</option>
           <option>CH Naresh</option>
           <option>K Mahesh</option>
@@ -356,19 +365,29 @@ class UserForm extends Component {
           <option>M Johny</option>
         </select>
       </div>
+
       <div>
-      <h1 className="text">Checked By:</h1>
-      <select className="input-width">
+      <h1 className="text-left">Checked By:</h1>
+      <input type="text" className="input-mb"/> <br></br>
+      <select className="text">
         <option>N Chanakya</option>
         <option>M Ram Ratan</option>
         <option>G Seshavalli Sai</option>
       </select>
       </div>
     </div>
+
+    <div className="button">
+      <div>
+        <button>Submit</button>
+        </div>
+    </div>
+
     <div className="footer-sub1">
       <h1 className="text1">MTPL/CL/FF/OS/TH/TP</h1>
       <h1 className="text1">Page 1 of 1</h1>
     </div>
+
   </div>
   </>
         </div>
