@@ -1,13 +1,60 @@
-import { Component } from "react";
-import InputMask from 'react-input-mask';
+import React, { useState } from 'react';
+
 import Header from "../Header";
 import "./index.css";
 
 
-class UserForm extends Component {
+const UserForm = ()=> {
   
-  render() {
-    
+  const instrumentOptions = [
+    'SSPRT Sensor with Indicator',
+    'R-Type Thermocouple with Indicator',
+    'S-Type Thermocouple',
+    '4 Wire RTD with Indicator',
+    'Multi-stem Thermometer',
+  ];
+
+  const instrumentSrNoOptions = {
+    'SSPRT Sensor with Indicator': ['DEMO 1', 'DEMO 2', 'DEMO 3'],
+    'R-Type Thermocouple with Indicator': ['DEMO 4', 'DEMO 5', 'DEMO 6'],
+    'S-Type Thermocouple': ['DEMO 7', 'DEMO 8', 'DEMO 9'],
+    '4 Wire RTD with Indicator': ['DEMO 10', 'DEMO 11', 'DEMO 12'],
+    'Multi-stem Thermometer': ['DEMO 13', 'DEMO 14', 'DEMO 15'],
+  };
+
+  const certificateNoOptions = {
+    'SSPRT Sensor with Indicator': ['DEMO-EQUIPMENT NAME 1', 'DEMO-EQUIPMENT NAME 2'],
+    'R-Type Thermocouple with Indicator': ['DEMO-EQUIPMENT NAME 3', 'DEMO-EQUIPMENT NAME 4'],
+    'S-Type Thermocouple': ['DEMO-EQUIPMENT NAME 5', 'DEMO-EQUIPMENT NAME 6'],
+    '4 Wire RTD with Indicator': ['DEMO-EQUIPMENT NAME 7', 'DEMO-EQUIPMENT NAME 8'],
+    'Multi-stem Thermometer': ['DEMO-EQUIPMENT NAME 9', 'DEMO-EQUIPMENT NAME 10'],
+  };
+
+  const initialRow = {
+    instrumentName: 'SSPRT Sensor with Indicator',
+    instrumentSrNo: instrumentSrNoOptions['SSPRT Sensor with Indicator'][0],
+    certificateNo: certificateNoOptions['SSPRT Sensor with Indicator'][0],
+    calibrationDueOn: '',
+  };
+
+  const [rows, setRows] = useState([initialRow]);
+
+  const handleAddRow = () => {
+    setRows((prevRows) => [...prevRows, initialRow ]);
+  };
+
+  const handleChange = (index, key, value) => {
+    setRows((prevRows) => {
+      const updatedRows = [...prevRows];
+      updatedRows[index][key] = value;
+      if (key === 'instrumentName') {
+        updatedRows[index]['instrumentSrNo'] = instrumentSrNoOptions[value][0];
+        updatedRows[index]['certificateNo'] = certificateNoOptions[value][0];
+      }
+      return updatedRows;
+    });
+  };
+
     return (
       <form className="main-form-container">
         <div className="main-sub-container">
@@ -26,13 +73,13 @@ class UserForm extends Component {
                 <tr>
                   <th>Equipment No</th>
                   <td>
-                  <InputMask mask="*******************" maskChar={""}/>
+                  <input />
                   </td>
                 </tr>
                 <tr>
                   <th>Equipment Condition</th>
                   <td>
-                  <InputMask mask="********************" maskChar={null} formatChars={{ '*': '[A-Za-z]' }} />
+                  <input/>
                   </td>
                 </tr>
               </tbody>
@@ -147,60 +194,87 @@ class UserForm extends Component {
       <>
         <p className="text-left">Standard used for Calibration:</p>
         <div className="third-section-container">
-          
-          <table className="table-border5">
-            <thead>
-              <tr>
-                <th className="mobile-hides ">Instrument Name</th>
-                <th className="mobile-hides ">Instrument Sr.No / Id No.</th>
-                <th className="mobile-hides "> Certificate No.</th>
-                <th className="mobile-hides ">Calibration Due On</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th className="desktophide" >Instrument Name</th>
-                <td>
-                  <select className="input-width unit">
-                    <option>SSPRT Sensor with Indicator</option>
-                    <option>R-Type Thermocouple with Indicator</option>
-                    <option>S-Type Thermocouple</option>
-                    <option>4 Wire RTD with Indicator</option>
-                    <option>Multi stem Thermometer</option>
-                  </select>
-                </td>
-                <th className="desktophide">Instrument Sr.No / Id No.</th>
-                <td>
-                  <input  />
-                </td>
-                <th className="desktophide"> Certificate No.</th>
-                <td>
-                  <select className="input-width unit"> 
-                    <option>DEMO-EQUIPMENT NAME 123</option>
-                  </select>
-                </td>
-                <th className="desktophide">Calibration Due On</th>
-                <td>
-                  <input type="date" className="dateInput" />
-                </td>
-              </tr>
-              <tr className="mobile-hides">
-                <td>
-                  <input   />
-                </td>
-                <td>
-                  <input   />
-                </td>
-                <td>
-                  <input   />
-                </td>
-                <td>
-                  <input  type="date" className="dateInput"  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  <table className="table-border5">
+    <thead>
+      <tr>
+        <th className="mobile-hides">Instrument Name</th>
+        <th className="mobile-hides">Instrument Sr.No / Id No.</th>
+        <th className="mobile-hides">Certificate No.</th>
+        <th className="mobile-hides">Calibration Due On</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row, index) => ( 
+        <React.Fragment key={index}> 
+          <tr key={index}>
+            <th className="desktophide">Instrument Name</th>
+            <td>
+              <select
+                className="input-width unit"
+                value={row.instrumentName}
+                onChange={(e) => handleChange(index, 'instrumentName', e.target.value)}
+              >
+                {instrumentOptions.map((option) => (
+                  <option key={option}>{option}</option>
+                ))}
+              </select>
+            </td>
+            <th className="desktophide">Instrument Sr.No / Id No.</th>
+            <td>
+              <select
+                value={row.instrumentSrNo}
+                onChange={(e) => handleChange(index, 'instrumentSrNo', e.target.value)}
+              >
+                {instrumentSrNoOptions[row.instrumentName].map((option) => (
+                  <option key={option}>{option}</option>
+                ))}
+              </select>
+            </td>
+            <th className="desktophide">Certificate No.</th>
+            <td>
+              <select
+                className="input-width unit"
+                value={row.certificateNo}
+                onChange={(e) => handleChange(index, 'certificateNo', e.target.value)}
+              >
+                {certificateNoOptions[row.instrumentName].map((option) => (
+                  <option key={option}>{option}</option>
+                ))}
+              </select>
+            </td>
+            <th className="desktophide">Calibration Due On</th>
+            <td>
+              <input
+                type="date"
+                className="dateInput"
+                value={row.calibrationDueOn}
+                onChange={(e) => handleChange(index, 'calibrationDueOn', e.target.value)}
+              />
+            </td>
+            <th>
+                <button onClick={handleAddRow}>Add</button>
+            </th>
+          </tr>
+          {/*<tr className="mobile-hides">
+            <td>
+              <input />
+            </td>
+            <td>
+              <input />
+            </td>
+            <td>
+              <input />
+            </td>
+            <td>
+              <input type="date" className="dateInput" />
+            </td>
+                </tr>*/}
+        </React.Fragment>
+      ))}
+    </tbody>
+  </table>
+</div>
+
 
         <div className="forth-section-container">
         <table className="table-border6">
@@ -218,10 +292,10 @@ class UserForm extends Component {
           <tbody>
             <tr>
               <td>
-                <input  />
+                <input  value={`${""}°C`}  readOnly  style={{ textAlign: "center" }}/>
               </td>
               <td>
-                <input   />
+                <input  value={`${""}%RH`} readOnly  style={{ textAlign: "center" }} />
               </td>
             </tr>
           </tbody>
@@ -394,7 +468,7 @@ class UserForm extends Component {
       </form>
     );
   }
-}
+
 
 export default UserForm;
 
