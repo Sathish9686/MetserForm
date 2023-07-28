@@ -40,20 +40,28 @@ const UserForm = ()=> {
   const [rows, setRows] = useState([initialRow]);
 
   const handleAddRow = () => {
-    setRows((prevRows) => [...prevRows, initialRow ]);
+    setRows((prevRows) => [...prevRows, initialRow, ]);
   };
 
   const handleChange = (index, key, value) => {
-    setRows((prevRows) => {
-      const updatedRows = [...prevRows];
-      updatedRows[index][key] = value;
-      if (key === 'instrumentName') {
-        updatedRows[index]['instrumentSrNo'] = instrumentSrNoOptions[value][0];
-        updatedRows[index]['certificateNo'] = certificateNoOptions[value][0];
+  setRows((prevRows) => {
+    return prevRows.map((row, rowIndex) => {
+      if (rowIndex === index) {
+        // If the row index matches the updated row, create a new row object with updated values
+        const updatedRow = { ...row, [key]: value };
+        if (key === 'instrumentName') {
+          updatedRow['instrumentSrNo'] = instrumentSrNoOptions[value][0];
+          updatedRow['certificateNo'] = certificateNoOptions[value][0];
+        }
+        return updatedRow;
+      } else {
+        // If the row index doesn't match the updated row, return the original row without any changes
+        return row;
       }
-      return updatedRows;
     });
-  };
+  });
+};
+
 
     return (
       <form className="main-form-container">
@@ -193,8 +201,9 @@ const UserForm = ()=> {
 
       <>
         <p className="text-left">Standard used for Calibration:</p>
-        <div className="third-section-container">
-  <table className="table-border5">
+        <div className="third-section-container" style={{"width": "100%"}}>
+
+  <table className="table-border5" style={{"width": "100%"}}>
     <thead>
       <tr>
         <th className="mobile-hides">Instrument Name</th>
@@ -205,7 +214,7 @@ const UserForm = ()=> {
     </thead>
     <tbody>
       {rows.map((row, index) => ( 
-        <React.Fragment key={index}> 
+        <React.Fragment key={index} > 
           <tr key={index}>
             <th className="desktophide">Instrument Name</th>
             <td>
@@ -251,9 +260,6 @@ const UserForm = ()=> {
                 onChange={(e) => handleChange(index, 'calibrationDueOn', e.target.value)}
               />
             </td>
-            <th>
-                <button onClick={handleAddRow}>Add</button>
-            </th>
           </tr>
           {/*<tr className="mobile-hides">
             <td>
@@ -274,6 +280,10 @@ const UserForm = ()=> {
     </tbody>
   </table>
 </div>
+<div className='addrow'>
+        <button  type="button" onClick={handleAddRow} className='addbutton' >Add</button>
+        </div>
+
 
 
         <div className="forth-section-container">

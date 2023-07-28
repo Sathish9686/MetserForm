@@ -127,7 +127,7 @@
   border: 1px solid black;
   border-collapse: collapse;
   font-size: small;
-  width: 100%;
+  width: auto;
 }
 .table-border5-mobile {
   display: block;
@@ -599,3 +599,11 @@
     display: block;
   }
 }
+
+.addrow{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-right: 15px;
+  margin-left : 15px;
+}  
