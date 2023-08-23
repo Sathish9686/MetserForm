@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import Header from "../Header";
 import "./index.css";
 
@@ -30,89 +29,242 @@ const UserForm = ()=> {
     'Multi-stem Thermometer': ['DEMO-EQUIPMENT NAME 9', 'DEMO-EQUIPMENT NAME 10'],
   };
 
-  const initialRow = {
-    instrumentName: 'SSPRT Sensor with Indicator',
-    instrumentSrNo: instrumentSrNoOptions['SSPRT Sensor with Indicator'][0],
-    certificateNo: certificateNoOptions['SSPRT Sensor with Indicator'][0],
-    calibrationDueOn: '',
-  };
 
-  const [rows, setRows] = useState([initialRow]);
-
-  const handleAddRow = () => {
-    setRows((prevRows) => [...prevRows, initialRow, ]);
-  };
-
-  const handleChange = (index, key, value) => {
-  setRows((prevRows) => {
-    return prevRows.map((row, rowIndex) => {
-      if (rowIndex === index) {
-        // If the row index matches the updated row, create a new row object with updated values
-        const updatedRow = { ...row, [key]: value };
-        if (key === 'instrumentName') {
-          updatedRow['instrumentSrNo'] = instrumentSrNoOptions[value][0];
-          updatedRow['certificateNo'] = certificateNoOptions[value][0];
-        }
-        return updatedRow;
-      } else {
-        // If the row index doesn't match the updated row, return the original row without any changes
-        return row;
+  const initialFormState = {
+    srfNo: "",
+    equipmentNo: "",
+    equipmentCondition: "",
+    dateOfCalibration: "",
+    recommendedCalibrationDue: "",
+    calibrationPoints: "",
+    make: "",
+    model: "",
+    srNoIdNo: "",
+    locationDepartment: "",
+    range: "",
+    resolution: "",
+    accuracy: "",
+    unitUnderMeasurement: "Celsius(°C)", // Default value
+    standardUsedForCalibration: [ // Initial standard used for calibration data (table rows)
+      {
+        instrumentName: 'SSPRT Sensor with Indicator',
+        instrumentSrNo: instrumentSrNoOptions['SSPRT Sensor with Indicator'][0],
+        certificateNo: certificateNoOptions['SSPRT Sensor with Indicator'][0],
+        calibrationDueOn: '',
       }
+    ],
+    temperature : "0° C",
+    humidity : "0% RH",
+    sopNumber :"MTPL/CL/SOP/ET/01", //default value
+    observations: [
+      { Row1: [] },
+      { Row2: [] },
+      { Row3: [] },
+      { Row4: [] },
+      { Row5: [] },
+    ],
+    remarks: "",
+    calibratedBy: "", // Default value
+    checkedBy: "", // Default value
+  };
+
+  // Define the state using useState hook
+  const [formState, setFormState] = useState(initialFormState);
+  console.log(formState)
+
+  const handleData = (e) => {
+    const { name, value } = e.target;
+      setFormState((prevState) => ({ ...prevState, [name]: value}));
+  };
+  
+  const handleAddRow = () => {
+    setFormState((prevState) => ({
+      ...prevState,
+      standardUsedForCalibration: [...prevState.standardUsedForCalibration, initialFormState.standardUsedForCalibration[0]],
+    }));
+  };
+
+  const handleDeleteRow = (index) => {
+    if (formState.standardUsedForCalibration.length > 1) {
+      setFormState((prevState) => ({
+        ...prevState,
+        standardUsedForCalibration: prevState.standardUsedForCalibration.filter((row, rowIndex) => rowIndex !== index),
+      }));
+    }
+  };
+  
+
+  const handleRowChange = (index, key, value) => {
+    setFormState((prevState) => {
+      const updatedRows = prevState.standardUsedForCalibration.map((row, rowIndex) => {
+        if (rowIndex === index) {
+          const updatedRow = { ...row, [key]: value };
+          if (key === "instrumentName") {
+            updatedRow.instrumentSrNo = instrumentSrNoOptions[value][0];
+            updatedRow.certificateNo = certificateNoOptions[value][0];
+          }
+          return updatedRow;
+        }
+        return row;
+      });
+      return { ...prevState, standardUsedForCalibration: updatedRows };
     });
-  });
+  };
+
+  const HandletempHumidity = (e)=>{
+    const {name, value} = e.target
+    if(name === "temperature"){
+      setFormState((prevState)=> ({...prevState, [name] : `${value}° C`}))
+    }else{
+      setFormState((prevState)=> ({...prevState, [name] : `${value}% RH`}))
+    } 
+  }
+  
+  const observationHandle1 = (e) => {
+    const { name, value } = e.target;
+  
+    setFormState((prevState) => ({
+      ...prevState,
+      observations: {
+        ...prevState.observations,
+        Row1: {
+          ...prevState.observations.Row1,
+          [name]: value,
+        },
+      },
+    }));
+  };
+
+const observationHandle2 = (e) => {
+  const { name, value } = e.target;
+
+  setFormState((prevState) => ({
+    ...prevState,
+    observations: {
+      ...prevState.observations,
+      Row2: {
+        ...prevState.observations.Row2,
+        [name]: value,
+      },
+    },
+  }));
 };
+
+const observationHandle3 = (e)=>{
+  const [name,value] = e.target.value
+
+  setFormState((prevState)=>({
+    ...prevState, 
+    observations: {
+      ...prevState.observations,
+      Row3 : {
+        ...prevState.observations.Row3, [name]:value
+      }
+    }
+  }))
+}
+
+const observationHandle4=(e)=>{
+  const [name,value]= e.target.value
+  setFormState((prevState)=>({
+    ...prevState,
+    observations : {
+      ...prevState.observations,
+      Row4 : {
+        ...prevState.observations.Row4, [name]:value
+      }
+    }
+  }))
+}
+
+const observationHandle5 = (e)=>{
+  const [name,value] = e.target.value;
+  setFormState((prevState)=>({
+    ...prevState.observations,
+    observations : {
+      ...prevState.observations,
+      Row5 : {
+        ...prevState.observations.Row5,[name]:value 
+      }
+    }
+  }))
+}
+const onSubmitForm = (e)=>{
+  e.preventDefault()
+
+  const formDetails = formState;
+  const apiUrl = "http://localhost:3000/updatetempform/";
+  const options = {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formDetails),
+  };
+
+
+  fetch(apiUrl, options)
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  }); 
+
+}
 
 
     return (
-      <form className="main-form-container">
+      <form className="main-form-container" onSubmit={onSubmitForm}>
         <div className="main-sub-container">
           <Header />
           <>
         <div className="top-section-container">
-          <div>
+          <div className='mobile-width'>
             <table className="table-border">
               <tbody>
                 <tr>
                   <th>SRF No.</th>
                   <td>
-                    <input type="number" />
+                    <input type="number" name='srfNo' onChange={handleData}/>
                   </td>
                 </tr>
                 <tr>
                   <th>Equipment No</th>
                   <td>
-                  <input />
+                  <input name="equipmentNo" onChange={handleData}/>
                   </td>
                 </tr>
                 <tr>
                   <th>Equipment Condition</th>
                   <td>
-                  <input/>
+                  <input name='equipmentCondition' onChange={handleData}/>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <div>
+          <div className='mobile-width'>
             <table className="table-border2">
               <thead>
                 <tr>
                   <th>Date of Calibration</th>
                   <td>
-                    <input type="date" className="dateInput"  />
+                    <input type="date" className="dateInput"name='dateOfCalibration' onChange={handleData} />
                   </td>
                 </tr>
                 <tr>
                   <th>Recomanded Calibration Due</th>
                   <td>
-                    <input type="date"  className="dateInput" />
+                    <input type="date"  className="dateInput" name="recommendedCalibrationDue" onChange={handleData}/>
                   </td>
                 </tr>
                 <tr>
                   <th>Calibration Points</th>
                   <td>
-                    <input type="text"  pattern="[A-Za-z0-9]+" />
+                    <input type="text"  pattern="[A-Za-z0-9]+" name='calibrationPoints' onChange={handleData}/>
                   </td>
                 </tr>
               </thead>
@@ -135,19 +287,19 @@ const UserForm = ()=> {
                 <tr>
                   <th>Make</th>
                   <td>
-                    <input  />
+                    <input name='make' onChange={handleData}/>
                   </td>
                 </tr>
                 <tr>
                   <th>Model</th>
                   <td>
-                    <input   />
+                    <input  name='model' onChange={handleData}/>
                   </td>
                 </tr>
                 <tr>
                   <th>Sr No. /Id No.</th>
                   <td>
-                    <input  />
+                    <input  name="srNoIdNo" onChange={handleData}/>
                   </td>
                 </tr>
                 <tr>
@@ -155,7 +307,7 @@ const UserForm = ()=> {
                     Location/<br></br>Department
                   </th>
                   <td>
-                    <input   />
+                    <input name='locationDepartment'  onChange={handleData} />
                   </td>
                 </tr>
               </tbody>
@@ -168,25 +320,25 @@ const UserForm = ()=> {
                 <tr>
                   <th>Range</th>
                   <td>
-                    <input />
+                    <input  name='range' onChange={handleData}/>
                   </td>
                 </tr>
                 <tr>
                   <th>Resolution</th>
                   <td>
-                    <input  />
+                    <input name='resolution' onChange={handleData} />
                   </td>
                 </tr>
                 <tr>
                   <th>Accuracy</th>
                   <td>
-                    <input />
+                    <input name='accuracy' onChange={handleData}/>
                   </td>
                 </tr>
                 <tr>
                   <th className="text-left ">Unit Under Measurement</th>
                   <td>
-                    <select className="input-width unit">
+                    <select className="input-width unit" name='unitUnderMeasurement' onChange={handleData}>
                       <option>Celsius(°C)</option>
                       <option>Fahrenheit(°F)</option>
                       <option>Kelvin(K)</option>
@@ -213,15 +365,16 @@ const UserForm = ()=> {
       </tr>
     </thead>
     <tbody>
-      {rows.map((row, index) => ( 
-        <React.Fragment key={index} > 
+      {formState.standardUsedForCalibration.map((row, index) => ( 
+        <React.Fragment key={index
+        } > 
           <tr key={index}>
             <th className="desktophide">Instrument Name</th>
             <td>
               <select
                 className="input-width unit"
                 value={row.instrumentName}
-                onChange={(e) => handleChange(index, 'instrumentName', e.target.value)}
+                onChange={(e) => handleRowChange(index, 'instrumentName', e.target.value)}
               >
                 {instrumentOptions.map((option) => (
                   <option key={option}>{option}</option>
@@ -232,7 +385,7 @@ const UserForm = ()=> {
             <td>
               <select
                 value={row.instrumentSrNo}
-                onChange={(e) => handleChange(index, 'instrumentSrNo', e.target.value)}
+                onChange={(e) => handleRowChange(index, 'instrumentSrNo', e.target.value)}
               >
                 {instrumentSrNoOptions[row.instrumentName].map((option) => (
                   <option key={option}>{option}</option>
@@ -244,7 +397,7 @@ const UserForm = ()=> {
               <select
                 className="input-width unit"
                 value={row.certificateNo}
-                onChange={(e) => handleChange(index, 'certificateNo', e.target.value)}
+                onChange={(e) => handleRowChange(index, 'certificateNo', e.target.value)}
               >
                 {certificateNoOptions[row.instrumentName].map((option) => (
                   <option key={option}>{option}</option>
@@ -257,8 +410,11 @@ const UserForm = ()=> {
                 type="date"
                 className="dateInput"
                 value={row.calibrationDueOn}
-                onChange={(e) => handleChange(index, 'calibrationDueOn', e.target.value)}
+                onChange={(e) => handleRowChange(index, 'calibrationDueOn', e.target.value)}
               />
+            </td>
+            <td>
+            <button type="button" onClick={(e)=> handleDeleteRow(index)}>Delete</button>
             </td>
           </tr>
           {/*<tr className="mobile-hides">
@@ -282,6 +438,7 @@ const UserForm = ()=> {
 </div>
 <div className='addrow'>
         <button  type="button" onClick={handleAddRow} className='addbutton' >Add</button>
+        
         </div>
 
 
@@ -302,10 +459,16 @@ const UserForm = ()=> {
           <tbody>
             <tr>
               <td>
-                <input  value={`${""}°C`}  readOnly  style={{ textAlign: "center" }}/>
+            
+                <input  type="number" style={{ textAlign: "center" }} onChange={HandletempHumidity} name='temperature'  />
+                <span >°C</span>
+              
               </td>
               <td>
-                <input  value={`${""}%RH`} readOnly  style={{ textAlign: "center" }} />
+      
+                <input  type='number'style={{ textAlign: "center" }} onChange={HandletempHumidity} name='humidity'/>
+                <span >% RH</span>
+  
               </td>
             </tr>
           </tbody>
@@ -319,7 +482,13 @@ const UserForm = ()=> {
           <tbody>
             <tr>
               <td>
-                <input />
+                <select name="sopNumber" onChange={handleData} style={{padding:"5px"}}>
+                  <option>MTPL/CL/SOP/ET/01</option>
+                  <option>MTPL/CL/SOP/ET/02</option>
+                  <option>MTPL/CL/SOP/ET/03</option>
+                  <option>MTPL/CL/SOP/ET/04</option>
+                  <option>MTPL/CL/SOP/ET/05</option>
+                </select>
               </td>
             </tr>
           </tbody>
@@ -332,15 +501,15 @@ const UserForm = ()=> {
       <>
       <div className="Observation-container">
         <p className="header-text">Observations:</p>
-        <table className="Observation-table">
+        <table className="Observation-table" style={{"width":"100%"}}>
       <thead>
           <tr>
               <th className="input-title" colSpan="1">Set°C</th>
-              <th colSpan="2">  <input className="input-width " /></th>
-              <th  colSpan="2"> <input className="input-width mobile-hide"  /></th>
-              <th  colSpan="2"> <input className="input-width mobile-hide"  /></th>
-              <th  colSpan="2"> <input className="input-width mobile-hide"  /></th>
-              <th  colSpan="2"> <input className="input-width mobile-hide"  /></th>
+              <th colSpan="2">  <input className="input-width" name='set°C1'  onChange={observationHandle1} /></th>
+              <th  colSpan="2"> <input className="input-width mobile-hide"  name='set°C2' onChange={observationHandle2} /></th>
+              <th  colSpan="2"> <input className="input-width mobile-hide" name='set°C3' onChange={observationHandle3} /></th>
+              <th  colSpan="2"> <input className="input-width mobile-hide"  name="set°C4" onChange={observationHandle4}/></th>
+              <th  colSpan="2"> <input className="input-width mobile-hide" name="set°C5" onChange={observationHandle5}/></th>
           </tr>
         <tr>
           <th className="input-title">Sr.No.</th>
@@ -358,69 +527,70 @@ const UserForm = ()=> {
       </thead>
       <tbody>
         <tr>
-        <td><input className="input-width"  /></td>
-          <td><input className="input-width"  /></td>
-          <td><input className="input-width"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
+          
+        <td><input className="input-width" name='srNo1'  onChange={observationHandle1}/></td>
+          <td><input className="input-width" name='std1' onChange={observationHandle1} /></td>
+          <td><input className="input-width" name='ucc1' onChange={observationHandle1}/></td>
+          <td><input className="input-width mobile-hide" name='std2' onChange={observationHandle1}/></td>
+          <td><input className="input-width mobile-hide" name='ucc2' onChange={observationHandle1}/></td>
+          <td><input className="input-width mobile-hide" name='std3' onChange={observationHandle1}/></td>
+          <td><input className="input-width mobile-hide"  name='ucc3' onChange={observationHandle1}/></td>
+          <td><input className="input-width mobile-hide" name='std4' onChange={observationHandle1} /></td>
+          <td><input className="input-width mobile-hide" name='ucc4' onChange={observationHandle1} /></td>
+          <td><input className="input-width mobile-hide" name='std5' onChange={observationHandle1}  /></td>
+          <td><input className="input-width mobile-hide" name='ucc5' onChange={observationHandle1} /></td>
         </tr>
         <tr>
-          <td><input className="input-width"  /></td>
-          <td><input className="input-width"  /></td>
-          <td><input className="input-width"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
+          <td><input className="input-width" name='srNo2' onChange={observationHandle2} /></td>
+          <td><input className="input-width" name='std1' onChange={observationHandle2} /></td>
+          <td><input className="input-width"  name='ucc1' onChange={observationHandle2}/></td>
+          <td><input className="input-width mobile-hide"  name='std2' onChange={observationHandle2} /></td>
+          <td><input className="input-width mobile-hide"  name='ucc2' onChange={observationHandle2} /></td>
+          <td><input className="input-width mobile-hide" name='std3' onChange={observationHandle2}  /></td>
+          <td><input className="input-width mobile-hide"  name='ucc3' onChange={observationHandle2} /></td>
+          <td><input className="input-width mobile-hide" name='std4' onChange={observationHandle2}  /></td>
+          <td><input className="input-width mobile-hide"  name='ucc4' onChange={observationHandle2} /></td>
+          <td><input className="input-width mobile-hide" name='std5' onChange={observationHandle2}  /></td>
+          <td><input className="input-width mobile-hide"  name='ucc5' onChange={observationHandle2} /></td>
         </tr>
         <tr>
-          <td><input className="input-width"  /></td>
-          <td><input className="input-width"  /></td>
-          <td><input className="input-width"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
+          <td><input className="input-width" name="srNo3" onChange={observationHandle3}/></td>
+          <td><input className="input-width"  name="std1" onChange={observationHandle3}/></td>
+          <td><input className="input-width" name="ucc1" onChange={observationHandle3} /></td>
+          <td><input className="input-width mobile-hide" name='std2'onChange={observationHandle3} /></td>
+          <td><input className="input-width mobile-hide" name="ucc2" onChange={observationHandle3}/></td>
+          <td><input className="input-width mobile-hide" name="std3" onChange={observationHandle3}/></td>
+          <td><input className="input-width mobile-hide" name="ucc3" onChange={observationHandle3} /></td>
+          <td><input className="input-width mobile-hide" name='std4' onChange={observationHandle3} /></td>
+          <td><input className="input-width mobile-hide" name='ucc4' onChange={observationHandle3}  /></td>
+          <td><input className="input-width mobile-hide" name="std5" onChange={observationHandle3}/></td>
+          <td><input className="input-width mobile-hide" name="std5" onChange={observationHandle3}/></td>
         </tr>
        <tr>
-       <td><input className="input-width"  /></td>
-          <td><input className="input-width"  /></td>
-          <td><input className="input-width"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
+       <td><input className="input-width" name="srNo4" onChange={observationHandle4}/></td>
+          <td><input className="input-width" name="std1" onChange={observationHandle4}/></td>
+          <td><input className="input-width" name="ucc1"  onChange={observationHandle4}/></td>
+          <td><input className="input-width mobile-hide" name="std2" onChange={observationHandle4}/></td>
+          <td><input className="input-width mobile-hide" name="ucc2" onChange={observationHandle4}/></td>
+          <td><input className="input-width mobile-hide" name="std3"  onChange={observationHandle4}/></td>
+          <td><input className="input-width mobile-hide" name="ucc3" onChange={observationHandle4}/></td>
+          <td><input className="input-width mobile-hide" name="std4" onChange={observationHandle4}/></td>
+          <td><input className="input-width mobile-hide" name="ucc4" onChange={observationHandle4}/></td>
+          <td><input className="input-width mobile-hide" name="std5" onChange={observationHandle4}/></td>
+          <td><input className="input-width mobile-hide" name="std5" onChange={observationHandle4}/></td>
         </tr>
         <tr>
-        <td><input className="input-width"  /></td>
-          <td><input className="input-width"  /></td>
-          <td><input className="input-width"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
-          <td><input className="input-width mobile-hide"  /></td>
+        <td><input className="input-width"  name="srNo5" onChange={observationHandle5}/></td>
+          <td><input className="input-width" name="std1" onChange={observationHandle5}/></td>
+          <td><input className="input-width" name="ucc1" onChange={observationHandle5}/></td>
+          <td><input className="input-width mobile-hide" name="std2" onChange={observationHandle5} /></td>
+          <td><input className="input-width mobile-hide" name="ucc2" onChange={observationHandle5}/></td>
+          <td><input className="input-width mobile-hide" name="std3" onChange={observationHandle5}/></td>
+          <td><input className="input-width mobile-hide" name="ucc3" onChange={observationHandle5}/></td>
+          <td><input className="input-width mobile-hide" name="std4" onChange={observationHandle5}/></td>
+          <td><input className="input-width mobile-hide" name="ucc4" onChange={observationHandle5}/></td>
+          <td><input className="input-width mobile-hide" name="std5" onChange={observationHandle5}/></td>
+          <td><input className="input-width mobile-hide" name="ucc5" onChange={observationHandle5}/></td>
         </tr>
       </tbody>
     </table>
@@ -435,13 +605,13 @@ const UserForm = ()=> {
   <div className="footer-container">
     <div className="remark-container">
       <h1 className="text-left">Remark's:</h1>
-      <textarea type="text" className="remarks" cols={30} rows={2} ></textarea>
+      <textarea type="text" className="remarks" cols={30} rows={2} name='remarks' onChange={handleData} value={formState.remarks}></textarea>
     </div>
     <div className="footer-sub">
       <div className="by-container">
         <h1 className="text-left left-align">Calibrated By:</h1>
-        <input type="text" className="input-mb"/> <br></br>
-        <select className="text">
+        <input type="text" style={{textAlign: 'center'}} className="input-mb" name="calibratedBy" onChange={handleData}/> <br></br>
+        <select className="text" name="calibratedBy" onChange={handleData}>
           <option>G Praveen</option>
           <option>CH Naresh</option>
           <option>K Mahesh</option>
@@ -452,8 +622,8 @@ const UserForm = ()=> {
 
       <div>
       <h1 className="text-left">Checked By:</h1>
-      <input type="text" className="input-mb"/> <br></br>
-      <select className="text">
+      <input type="text" style={{textAlign: 'center'}}  onChange={handleData} name="checkedBy" className="input-mb"/> <br></br>
+      <select className="text" onChange={handleData} name="checkedBy">
         <option>N Chanakya</option>
         <option>M Ram Ratan</option>
         <option>G Seshavalli Sai</option>
@@ -463,7 +633,7 @@ const UserForm = ()=> {
 
     <div className="button">
       <div>
-        <button>Submit</button>
+        <button type='submit'>Submit</button>
         </div>
     </div>
 
