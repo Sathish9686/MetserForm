@@ -151,7 +151,7 @@ const observationHandle2 = (e) => {
 };
 
 const observationHandle3 = (e)=>{
-  const [name,value] = e.target.value
+  const {name,value} = e.target.value
 
   setFormState((prevState)=>({
     ...prevState, 
@@ -165,7 +165,7 @@ const observationHandle3 = (e)=>{
 }
 
 const observationHandle4=(e)=>{
-  const [name,value]= e.target.value
+  const {name,value}= e.target.value
   setFormState((prevState)=>({
     ...prevState,
     observations : {
@@ -178,7 +178,7 @@ const observationHandle4=(e)=>{
 }
 
 const observationHandle5 = (e)=>{
-  const [name,value] = e.target.value;
+  const {name,value} = e.target.value;
   setFormState((prevState)=>({
     ...prevState.observations,
     observations : {
@@ -192,14 +192,14 @@ const observationHandle5 = (e)=>{
 const onSubmitForm = (e)=>{
   e.preventDefault()
 
-  const formDetails = formState;
-  const apiUrl = "http://localhost:3000/updatetempform/";
+  //const {formDetails} = formState;
+  const apiUrl = "https://metserformnodejsprojectbc.onrender.com/updatetempform/";
   const options = {
     method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json"
     },
-    body: JSON.stringify(formDetails),
+    body: JSON.stringify(formState),
   };
 
 
