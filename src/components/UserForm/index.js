@@ -191,9 +191,10 @@ const observationHandle5 = (e)=>{
 }
 const onSubmitForm = (e)=>{
   e.preventDefault()
+  console.log("Sent to DB")
 
   //const {formDetails} = formState;
-  const apiUrl = "https://metserformnodejsprojectbc.onrender.com/updatetempform/";
+  const apiUrl = "https://backendmetser.onrender.com/updatetempform/";
   const options = {
     method: "POST",
     headers: {
@@ -227,7 +228,7 @@ const onSubmitForm = (e)=>{
                 <tr>
                   <th>SRF No.</th>
                   <td>
-                    <input type="number" name='srfNo' onChange={handleData}/>
+                    <input type="text" name='srfNo' onChange={handleData}/>
                   </td>
                 </tr>
                 <tr>
